@@ -1,19 +1,19 @@
-name: Deploy to Heroku
-on: # only want to trigger this when 'push' to a tag
+name: Deploy to heroku
+on:
   push:
     tags:
-      - 'v*'
-      - '!v*-alpha' # ! means except this, if you suffix it with alpha, it wont push
+    - 'v*' # push if tag starts with v
+    - '!v*-alpha' # push tags that starts with v except those that ends with alpha
 jobs:
   deploy_to_heroku:
     runs-on: ubuntu-latest
-      steps:
-      - name: Checkout src
-        uses: actions/checkout@v2
-      - name: Deploy
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "itsbeartimeboys" #Must be unique in Heroku
-          heroku_email: ${{ secrets.email }}
-          branch: ${{ github.ref_name }}
+    steps:
+    - name: Checkout src
+      uses: actions/checkout@v2
+    - name: Deploy
+      uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "itsbeartimeboys" #Must be unique in Heroku
+        heroku_email: ${{secrets.email}}
+        branch: ${{github.ref_name}}
